@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+    <link rel='shortcut icon' type='image/x-icon' href='https://lh3.googleusercontent.com/proxy/QPsZQbWtzSkR6eN9atOOdKSBd5Wl_wG05s7YGnEU_mqaw_KB8OKM_FHJ8BkekRYdnODXuELu78rKgYr0adB20ATeXas-toswS46UkXITkEQkXkIj8W7gO4800HczMw' />
 </head>
 
 <body>
@@ -17,21 +18,34 @@
 
 
 
-    <div class="navbar navbar-dark bg-primary justify-content-center">
+    <div class="navbar navbar-dark bg-dark justify-content-center" style="background-color: #e3f2fd">
         <ul class="nav justify-content-center">
             <li class="nav-item">
-                <h3 style="color: aliceblue" class="nav-link active" >CoronaVirus Tracking Application</h3>
+                <h3 style="color: white"  class="nav-link active" >CoronaVirus Tracking Application</h3>
             </li>
         </ul>
     </div>
 
+    <div class="jumbotron">
+
+        <div class="row">
+            <div class="col-md-6">
+                <p>Total number of cases reported as of today due to corona virus : </p>
+                <p>Corona virüsü kaynaklı oluşan toplam vaka sayısı : </p>
+            </div>
+            <div class="col-md-6">
+                <b><h1 th:text="${totalReportedCases}" ></h1></b>
+            </div>
+        </div>
+
+    </div>
 
 
-<table class="table table-striped">
+<table class="table table-dark table-striped">
     <tr>
-        <th>State</th>
-        <th>Country</th>
-        <th>Total Cases</th>
+        <th>State/Bölge</th>
+        <th>Country/Ülke</th>
+        <th>Total Cases/Toplam Vaka</th>
     </tr>
     <tr th:each="locationStat : ${locationStats}">
         <td th:text="${locationStat.state}"></td>
