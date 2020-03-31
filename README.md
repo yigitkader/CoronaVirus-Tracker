@@ -1,4 +1,4 @@
-<h1>-Simple Sipring Boot Project for tracking CoronaVirus</h1> 
+#Simple Sipring Boot Project for tracking CoronaVirus
 ![ss](https://github.com/yigitkader/SpringBoot-CoronaVirus-Tracker/blob/master/pics/ss.png)
 
 <h2>Dependencies</h2>
