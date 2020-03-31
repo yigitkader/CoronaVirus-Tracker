@@ -1,6 +1,7 @@
 package com.loops.coronavirustracker.services;
 
 
+import com.loops.coronavirustracker.models.LocationStats;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,15 +14,26 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
-@Scheduled(cron = "* * * * * *")
 public class CoronaVirusDataService {
 
     private static String CORONAVIRUS_DATA_URL ="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
+    private List<LocationStats> allStats = new ArrayList<LocationStats>();
 
-    @PostConstruct  //when this service's construct starts after that starts this func.
+
+    public List<LocationStats> getAllStats() {
+        return allStats;
+    }
+
+    @PostConstruct  //when this service's construct starts after that this func starts.
+    @Scheduled(cron = "* * 1 * * *") // (second,minute,hour,day,...) it works every hour
     public void getCoronaVirusData() throws IOException, InterruptedException {
+
+         List<LocationStats> newStats = new ArrayList<LocationStats>();
 
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest httpRequest= HttpRequest.newBuilder()
@@ -34,10 +46,17 @@ public class CoronaVirusDataService {
 
         Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
         for (CSVRecord record : records) {
-            String provinceState = record.get("Province/State");
-            System.out.println(provinceState);
 
+            LocationStats locationStats = new LocationStats();
+            locationStats.setState(record.get("Province/State"));
+            locationStats.setCountry(record.get("Country/Region"));
+            locationStats.setLatestTotalCases(record.get(record.size()-1));
+
+            System.out.println(locationStats);
+            newStats.add(locationStats);
         }
+
+        this.allStats = newStats;
 
 
 
